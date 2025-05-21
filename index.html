@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TELEPAIR</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h1>TELEPAIR</h1>
+      <span>Business Insights</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#" class="nav-link active" data-section="sectionDashboard"><i class="fas fa-home"></i> Dashboard</a></li>
+      <li><a href="#" class="nav-link" data-section="sectionInventory"><i class="fas fa-box"></i> Inventory</a></li>
+      <li><a href="#" class="nav-link" data-section="sectionSales"><i class="fas fa-chart-line"></i> Sales</a></li>
+      <li><a href="#" class="nav-link" data-section="sectionCustomers"><i class="fas fa-users"></i> Customers</a></li>
+      <li><a href="#" class="nav-link" data-section="sectionTickets"><i class="fas fa-ticket-alt"></i> Tickets</a></li>
+      <li><a href="#" class="nav-link" data-section="sectionReport" id="generateReportLink"><i class="fas fa-file-alt"></i> Report</a></li>
+    </ul>
+    <div class="logout-section">
+      <p id="userEmail" style="margin-bottom: 0.5rem;"></p>
+      <a href="#" id="logoutBtn" class="nav-link"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="header">
+      <h1 id="currentSectionTitle">Dashboard Overview</h1>
+      <div class="user-info">
+        <i class="fas fa-user-circle"></i>
+      </div>
+    </header>
+
+    <section id="sectionDashboard" class="content-section active">
+      <h2>Dashboard Overview</h2>
+      <div class="dashboard-cards">
+        <div class="card">
+          <h3>Total Sales</h3>
+          <p id="totalSales">ksh0.00</p>
+        </div>
+        <div class="card">
+          <h3>Total Inventory Items</h3>
+          <p id="totalInventory">0</p>
+        </div>
+        <div class="card">
+          <h3>Total Customers</h3>
+          <p id="totalCustomers">0</p>
+        </div>
+        <div class="card">
+          <h3>Open Tickets</h3>
+          <p id="openTickets">0</p>
+        </div>
+      </div>
+
+      <div class="dashboard-charts">
+        <div class="card">
+          <h3>Sales Trends</h3>
+          <canvas id="salesChart"></canvas>
+        </div>
+        <div class="card">
+          <h3>Ticket Status Distribution</h3>
+          <canvas id="ticketsChart"></canvas> </div>
+      </div>
+    </section>
+
+    <section id="sectionInventory" class="content-section">
+      <h2>Inventory Management</h2>
+      <form id="inventoryForm">
+        <input type="text" name="itemName" placeholder="Item Name" required />
+        <input type="number" name="itemQuantity" placeholder="Quantity" required />
+        <input type="number" name="itemPrice" step="0.01" placeholder="Price per Item" required />
+        <button type="submit">Add Item</button>
+      </form>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Item Name</th>
+              <th>Quantity</th>
+              <th>Price</th>
+              <th>Total Value</th> <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="inventoryList">
+            </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="sectionSales" class="content-section">
+      <h2>Sales Tracking</h2>
+      <form id="salesForm">
+        <input type="text" name="saleItemName" placeholder="Item Name" required />
+        <input type="number" name="saleQuantity" placeholder="Quantity" required />
+        <input type="date" name="saleDate" required />
+        <button type="submit">Record Sale</button>
+      </form>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Item Name</th>
+              <th>Quantity</th>
+              <th>Price</th>
+              <th>Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="salesList">
+            </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="sectionCustomers" class="content-section">
+      <h2>Customer Management</h2>
+      <form id="customersForm">
+        <input type="text" name="customerName" placeholder="Customer Name" required />
+        <input type="tel" name="customerPhone" placeholder="Phone Number" />
+        <input type="email" name="customerEmail" placeholder="Email" />
+        <input type="text" name="customerAddress" placeholder="Address" />
+        <button type="submit">Add Customer</button>
+      </form>
+      <ul class="list-group" id="customersList">
+        </ul>
+    </section>
+
+    <section id="sectionTickets" class="content-section">
+      <h2>Support Tickets</h2>
+      <form id="ticketsForm">
+        <input type="text" name="ticketCustomerId" placeholder="Customer ID" required />
+        <input type="text" name="ticketDevice" placeholder="Device" required />
+        <input type="text" name="ticketIssue" placeholder="Issue Description" required />
+        <select name="ticketStatus" required>
+          <option value="Open">Open</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Completed">Completed</option>
+          <option value="Cancelled">Cancelled</option>
+        </select>
+        <input type="date" name="ticketDateReceived" required />
+        <button type="submit">Add Ticket</button>
+      </form>
+      <ul class="list-group" id="ticketsList">
+        </ul>
+    </section>
+
+    <section id="sectionReport" class="content-section">
+      <h2>Generate Business Report</h2>
+      <form id="reportDateForm">
+        <input type="date" id="reportStartDate" name="startDate" required />
+        <input type="date" id="reportEndDate" name="endDate" required />
+        <button type="submit">Generate Report</button>
+      </form>
+      <button id="downloadReportBtn" class="btn btn-primary">Download Report</button>
+      <pre id="reportContent"></pre>
+    </section>
+  </main>
+
+  <script type="module" src="firebase-config.js"></script>
+  <script type="module" src="script.js"></script>
+</body>
+</html>
